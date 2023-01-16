@@ -1,11 +1,28 @@
-import { createApp } from 'vue'
+// Components
 import App from './App.vue'
+
+// Composables
+import { createApp } from 'vue'
+
+// styles
+import './styles/main.scss'
+
+import store from './store/store'
 import router from './router'
+import axios from 'axios';
 
-import './assets/main.css'
 
-const app = createApp(App)
+const accessToken = localStorage.getItem('token')
 
-app.use(router)
+if (accessToken) {
+  axios.defaults.headers.common['Authorization'] = accessToken
+}
+
+const app = createApp({ extends: App })
+  .use(store)
+  .use(router)
+
 
 app.mount('#app')
+
+
